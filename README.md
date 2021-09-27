@@ -1,4 +1,4 @@
-With this second part of our small talk regarding the call stack and event loop, we're going to use actual API calls, to both demonstrate the original example and test out a couple of other scenarios where Promises could alter the call stack and event loop. After all, setTImeout doesn't specifically return a Promise - it just alters the call stack in a different way. For this example, I'm personally going to download [axios](https://axios-http.com) with the command:
+With this second part of our small talk regarding the call stack and event loop, we're going to use actual API calls, to both demonstrate the original example and test out a couple of other scenarios where Promises could alter the call stack and event loop. After all, setTImeout doesn't specifically return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - it just alters the call stack in a different way. For these examples, I'm personally going to download [axios](https://axios-http.com) with the command:
 <br/><br/>
 \`\`\`
 npm install --save axios
@@ -40,7 +40,7 @@ console.log(\`${name}, I am your father!\`);
 <br/><br/>
 getData() is returning a Promise, just as the standalone axios.get() returned a Promise. Once Javascript sees that the function returns a Promise, it again places getData() in it's 'to do' container, and continues on in the file.
 <br/><br/>
-I don't know about you, but when I use axios, I typically avoid the .then() callback, and instead use [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Async/await allows us to run asynchronous code, allows us to avoid "callback hell", and makes our code more readable. It also returns a Promise. If we go back to our axios examples, which also returned a Promise, we can deduce then that async/await should function similarily to .then() callback syntax. First we declare an outer function as async, then inside the function declare which expression(s) Javascript should wait on by using the keyword 'await'. We will use it in our index.js like so, and then run node index.js:
+I don't know about you, but when I use axios, I typically avoid the .then() callback, and instead use [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Async/await allows us to run asynchronous code, lets us avoid "callback hell", and makes our code more readable. It also returns a Promise. If we go back to our axios examples, which also returned a Promise, we can deduce then that async/await should function similarily to .then() callback syntax. First we declare an outer function as async, then inside the function declare which expression(s) Javascript should wait on by using the keyword 'await'. We will use it in our index.js like so, and then run node index.js:
 <br/><br/>
 \`\`\`
 const getData = async () => {
@@ -68,4 +68,4 @@ console.log(\`${name}, I am your father!\`);
 // logs 'Luke Skywalker, I am your father!'
 \`\`\`
 </br></br>
-It's exactly the same behavior as using .then callback syntax, except it looks nicer!
+It's exactly the same behavior as using the .then callback syntax, except it looks nicer! Instead of passing the result of the Promise into a .then().catch() block, we're simply passing it into a variable. We can then work with that variable on the same block-levels as the API call, with the additional perk that the operations further down the function do not get invoked.
