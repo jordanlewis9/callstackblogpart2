@@ -9,6 +9,7 @@ const getData = () => {
   axios.get('https://swapi.dev/api/people/1').then(response => {
     darthVaderVoice(response.data.name);
   });
+  console.log(response.data);
   darthVaderVoice(response.data.name);
 };
 
